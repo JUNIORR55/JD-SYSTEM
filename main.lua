@@ -1,25 +1,35 @@
--- [[ JD SYSTEM v5.0 - MAIN ]]
-shared.JD_SYSTEM = {
-    Modules = {},
-    Toggles = {}
-}
+-- [[ JD SYSTEM v5.0 - MAIN UI ]]
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
+local Window = Rayfield:CreateWindow({
+   Name = "🚀 JD SYSTEM v5.0",
+   LoadingTitle = "Carregando Módulos...",
+   LoadingSubtitle = "por Junior (JD)",
+   Theme = "Default" -- Você pode mudar para 'Ocean', 'Midnight', etc.
+})
+
+-- Puxando os módulos do seu GitHub
 local user = "JUNIORR55"
 local universalURL = "https://raw.githubusercontent.com/"..user.."/JD-SYSTEM/main/games/universal.lua"
+local Universal = loadstring(game:HttpGet(universalURL))()
 
-local success, result = pcall(function()
-    return loadstring(game:HttpGet(universalURL))()
-end)
+-- Aba Principal
+local MainTab = Window:CreateTab("Principal", 4483362458) -- Ícone de casa
 
-if success then
-    shared.JD_SYSTEM.Modules.Universal = result
-    print("Modulos Universais Carregados!")
-else
-    warn("Erro ao carregar modulos: " .. tostring(result))
-end
+-- Criando o Toggle do Orbit
+local OrbitToggle = MainTab:CreateToggle({
+   Name = "Orbit Control (JD)",
+   CurrentValue = false,
+   Flag = "OrbitFlag",
+   Callback = function(Value)
+      -- Aqui usamos a função que está no seu arquivo universal.lua
+      Universal.ToggleOrbit(Value)
+   end,
+})
 
-game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "JD SYSTEM",
-    Text = "Sistema Pronto para Uso!",
-    Duration = 5
+Rayfield:Notify({
+   Title = "JD SYSTEM Ativo",
+   Content = "Módulos carregados com sucesso!",
+   Duration = 5,
+   Image = 4483362458,
 })
