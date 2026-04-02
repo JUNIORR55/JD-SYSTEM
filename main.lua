@@ -1,11 +1,11 @@
--- [[ JD SYSTEM v5.0 - MAIN UI ]]
+-- [[ JD SYSTEM v5.0 - MAIN COM SUB-PAINEL ]]
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
    Name = "🚀 JD SYSTEM v5.0",
-   LoadingTitle = "Carregando Módulos...",
-   LoadingSubtitle = "por Junior (JD)",
-   Theme = "Default" -- Você pode mudar para 'Ocean', 'Midnight', etc.
+   LoadingTitle = "Carregando Interface...",
+   LoadingSubtitle = "by Junior (JD)",
+   Theme = "Default"
 })
 
 -- Puxando os módulos do seu GitHub
@@ -13,23 +13,49 @@ local user = "JUNIORR55"
 local universalURL = "https://raw.githubusercontent.com/"..user.."/JD-SYSTEM/main/games/universal.lua"
 local Universal = loadstring(game:HttpGet(universalURL))()
 
--- Aba Principal
-local MainTab = Window:CreateTab("Principal", 4483362458) -- Ícone de casa
+-- ABA PRINCIPAL
+local MainTab = Window:CreateTab("Combate & Orbit", 4483362458)
 
--- Criando o Toggle do Orbit
+-- SEÇÃO DO ORBIT (O "Sub-Painel")
+MainTab:CreateSection("Configurações do Orbit")
+
 local OrbitToggle = MainTab:CreateToggle({
-   Name = "Orbit Control (JD)",
+   Name = "Ativar Item Orbit",
    CurrentValue = false,
    Flag = "OrbitFlag",
    Callback = function(Value)
-      -- Aqui usamos a função que está no seu arquivo universal.lua
       Universal.ToggleOrbit(Value)
    end,
 })
 
+-- Slider para o Raio (Distância)
+MainTab:CreateSlider({
+   Name = "Distância do Orbit (Raio)",
+   Range = {1, 20},
+   Increment = 1,
+   Suffix = "Blocos",
+   CurrentValue = 5,
+   Flag = "RadiusFlag",
+   Callback = function(Value)
+      Universal.Radius = Value -- Isso altera a variável direto no universal.lua!
+   end,
+})
+
+-- Slider para a Velocidade
+MainTab:CreateSlider({
+   Name = "Velocidade do Giro",
+   Range = {1, 50},
+   Increment = 1,
+   Suffix = "Velo",
+   CurrentValue = 5,
+   Flag = "SpeedFlag",
+   Callback = function(Value)
+      Universal.Speed = Value
+   end,
+})
+
 Rayfield:Notify({
-   Title = "JD SYSTEM Ativo",
-   Content = "Módulos carregados com sucesso!",
-   Duration = 5,
-   Image = 4483362458,
+   Title = "JD SYSTEM",
+   Content = "Painel de Controle Carregado!",
+   Duration = 5
 })
